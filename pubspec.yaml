@@ -1,5 +1,5 @@
 name: local_auth_showcase
-description: "A new Flutter project."
+description: "An example of local user authentication on a device."
 publish_to: 'none'
 version: 0.1.0
 

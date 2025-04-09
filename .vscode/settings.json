@@ -1,0 +1,14 @@
+{
+  "cSpell.words": [
+    "buildlog",
+    "swiftpm",
+    "Symbolication"
+  ],
+  "dart.flutterSdkPath": ".fvm/flutter_sdk",
+  "dart.lineLength": 80,
+  "[dart]": {
+        "editor.rulers": [
+            80
+        ]
+    },
+}
