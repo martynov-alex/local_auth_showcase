@@ -1,3 +1,3 @@
-# local_auth_showcase
+# Local authentication showcase
 
-A new Flutter project.
+An example of local user authentication on a device using the [local_auth](https://pub.dev/packages/local_auth) plugin.
