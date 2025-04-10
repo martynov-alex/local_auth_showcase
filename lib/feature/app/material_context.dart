@@ -3,6 +3,8 @@ import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:local_auth_showcase/core/router/router.dart';
+import 'package:local_auth_showcase/feature/app/app.dart';
+import 'package:local_auth_showcase/feature/auth/domain/bloc/auth_bloc.dart';
 
 class MaterialContext extends StatefulWidget {
   const MaterialContext({super.key});
@@ -13,11 +15,13 @@ class MaterialContext extends StatefulWidget {
 
 class _MaterialContextState extends State<MaterialContext> {
   late final GoRouter _router;
+  late final AuthBloc authBloc;
 
   @override
   void initState() {
     super.initState();
-    _router = router;
+    authBloc = DependenciesScope.of(context).authBloc;
+    _router = AppRouter.getRouter(authBloc);
   }
 
   @override

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:local_auth_showcase/core/extensions/theme_extension.dart';
 import 'package:local_auth_showcase/core/router/routes.dart';
 
 class RootScreen extends StatefulWidget {
@@ -27,6 +28,9 @@ class _RootScreenState extends State<RootScreen> {
     return Scaffold(
       body: Center(child: widget.navigator),
       bottomNavigationBar: NavigationBar(
+        labelTextStyle: WidgetStateTextStyle.resolveWith(
+          (_) => context.textTheme.labelLarge!,
+        ),
         destinations: const <NavigationDestination>[
           NavigationDestination(
             icon: Icon(Icons.security),
