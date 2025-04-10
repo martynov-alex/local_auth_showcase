@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:local_auth_showcase/core/router/router.dart';
 
 class MaterialContext extends StatefulWidget {
@@ -25,6 +26,7 @@ class _MaterialContextState extends State<MaterialContext> {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         useMaterial3: true,
+        textTheme: GoogleFonts.outfitTextTheme(),
         colorScheme: ColorScheme.fromSeed(
           seedColor: Colors.greenAccent,
           brightness: Brightness.light,
@@ -32,6 +34,7 @@ class _MaterialContextState extends State<MaterialContext> {
       ),
       darkTheme: ThemeData(
         useMaterial3: true,
+        textTheme: GoogleFonts.outfitTextTheme(),
         colorScheme: ColorScheme.fromSeed(
           seedColor: Colors.greenAccent,
           brightness: Brightness.dark,

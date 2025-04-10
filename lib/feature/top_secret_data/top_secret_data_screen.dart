@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:local_auth_showcase/core/extensions/theme_extension.dart';
 
 class TopSecretDataScreen extends StatefulWidget {
   const TopSecretDataScreen({super.key});
@@ -13,9 +14,9 @@ class _TopSecretDataScreenState extends State<TopSecretDataScreen> {
     return Center(
       child: Text(
         "Top Secret Data",
-        style: Theme.of(
-          context,
-        ).textTheme.headlineMedium?.copyWith(color: Colors.red),
+        style: context.textTheme.headlineMedium?.copyWith(
+          color: context.colorScheme.error,
+        ),
       ),
     );
   }

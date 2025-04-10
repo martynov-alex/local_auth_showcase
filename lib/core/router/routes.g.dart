@@ -34,9 +34,9 @@ RouteBase get $rootRoute => ShellRouteData.$route(
   factory: $RootRouteExtension._fromState,
   routes: [
     GoRouteData.$route(
-      path: '/top-secret-info',
+      path: '/top-secret-data',
 
-      factory: $TopSecretInfoRouteExtension._fromState,
+      factory: $TopSecretDataRouteExtension._fromState,
     ),
     GoRouteData.$route(
       path: '/settings',
@@ -50,11 +50,11 @@ extension $RootRouteExtension on RootRoute {
   static RootRoute _fromState(GoRouterState state) => const RootRoute();
 }
 
-extension $TopSecretInfoRouteExtension on TopSecretDataRoute {
+extension $TopSecretDataRouteExtension on TopSecretDataRoute {
   static TopSecretDataRoute _fromState(GoRouterState state) =>
       const TopSecretDataRoute();
 
-  String get location => GoRouteData.$location('/top-secret-info');
+  String get location => GoRouteData.$location('/top-secret-data');
 
   void go(BuildContext context) => context.go(location);
 

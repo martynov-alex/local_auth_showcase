@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:local_auth_showcase/feature/auth/login_screen.dart';
+import 'package:local_auth_showcase/feature/auth/widget/login_screen.dart';
 import 'package:local_auth_showcase/feature/root/root_screen.dart';
 import 'package:local_auth_showcase/feature/settings/settings_screen.dart';
 import 'package:local_auth_showcase/feature/top_secret_data/top_secret_data_screen.dart';
