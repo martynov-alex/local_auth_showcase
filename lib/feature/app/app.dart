@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:local_auth_showcase/core/extensions/context_extension.dart';
 import 'package:local_auth_showcase/feature/app/material_context.dart';
+import 'package:local_auth_showcase/feature/auth/domain/bloc/auth_bloc.dart';
 import 'package:local_auth_showcase/main.dart';
 
 class App extends StatelessWidget {
@@ -12,7 +14,14 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) {
     return DependenciesScope(
       dependencies: dependencies,
-      child: MaterialContext(),
+      child: MultiBlocProvider(
+        providers: [
+          BlocProvider<AuthBloc>(
+            create: (BuildContext context) => dependencies.authBloc,
+          ),
+        ],
+        child: MaterialContext(),
+      ),
     );
   }
 }

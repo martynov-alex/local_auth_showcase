@@ -21,5 +21,8 @@ final class FakeAuthDataSource implements AuthDataSource<Token> {
   }
 
   @override
-  Future<void> signOut() async {}
+  Future<void> signOut() async {
+    // Kinda fake sign out
+    await Future.delayed(const Duration(seconds: 2));
+  }
 }

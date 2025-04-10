@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:local_auth_showcase/core/extensions/theme_extension.dart';
 import 'package:local_auth_showcase/feature/app/app.dart';
 import 'package:local_auth_showcase/feature/auth/domain/bloc/auth_bloc.dart';
@@ -25,12 +26,22 @@ class _SettingsScreenState extends State<SettingsScreen> {
       appBar: AppBar(title: Text("Settings"), centerTitle: true),
       body: ListView(
         children: [
-          ListTile(
-            title: Text("Sign out", style: context.textTheme.titleLarge),
-            onTap: () {
-              _authBloc.add(const AuthEvent.signOut());
+          BlocBuilder<AuthBloc, AuthState>(
+            builder: (context, state) {
+              return ListTile(
+                title: Text("Sign out", style: context.textTheme.titleLarge),
+                onTap: () {
+                  _authBloc.add(const AuthEvent.signOut());
+                },
+                trailing:
+                    state.isProcessing
+                        ? CircularProgressIndicator.adaptive(
+                          backgroundColor: context.colorScheme.onPrimary,
+                          constraints: BoxConstraints.tight(Size(20, 20)),
+                        )
+                        : Icon(Icons.logout),
+              );
             },
-            trailing: const Icon(Icons.logout),
           ),
         ],
       ),

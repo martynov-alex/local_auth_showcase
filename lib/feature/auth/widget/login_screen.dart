@@ -27,7 +27,6 @@ class _LoginScreenState extends State<LoginScreen> {
         child: ConstrainedBox(
           constraints: BoxConstraints.tight(Size(300, 80)),
           child: BlocBuilder<AuthBloc, AuthState>(
-            bloc: _authBloc,
             builder: (context, state) {
               if (state.isProcessing) {
                 return FilledButton(
