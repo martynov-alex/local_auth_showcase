@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:local_auth_showcase/core/utils/app_bloc_observer.dart';
@@ -12,6 +14,11 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  logging.Logger.root.level = logging.Level.ALL; // defaults to Level.INFO
+  logging.Logger.root.onRecord.listen((record) {
+    log('${record.level.name}: ${record.time}: ${record.message}');
+  });
 
   final logger = logging.Logger('Local Auth Showcase');
   Bloc.observer = AppBlocObserver(logger);

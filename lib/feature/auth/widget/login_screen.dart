@@ -22,49 +22,51 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: ConstrainedBox(
-        constraints: BoxConstraints.tight(Size(300, 80)),
-        child: BlocBuilder<AuthBloc, AuthState>(
-          bloc: _authBloc,
-          builder: (context, state) {
-            if (state.isProcessing) {
-              return FilledButton(
-                onPressed: () {},
-                child: CircularProgressIndicator.adaptive(
-                  backgroundColor: context.colorScheme.onPrimary,
-                  strokeWidth: 8,
-                  constraints: BoxConstraints.tight(Size(40, 40)),
-                ),
-              );
-            }
+    return Scaffold(
+      body: Center(
+        child: ConstrainedBox(
+          constraints: BoxConstraints.tight(Size(300, 80)),
+          child: BlocBuilder<AuthBloc, AuthState>(
+            bloc: _authBloc,
+            builder: (context, state) {
+              if (state.isProcessing) {
+                return FilledButton(
+                  onPressed: () {},
+                  child: CircularProgressIndicator.adaptive(
+                    backgroundColor: context.colorScheme.onPrimary,
+                    strokeWidth: 8,
+                    constraints: BoxConstraints.tight(Size(40, 40)),
+                  ),
+                );
+              }
 
-            if (state.isError) {
-              FilledButton(
+              if (state.isError) {
+                FilledButton(
+                  onPressed: () {
+                    _authBloc.add(const AuthEvent.signInWithOAuth());
+                  },
+                  child: Text(
+                    "Error! Try again",
+                    style: context.textTheme.titleLarge?.copyWith(
+                      color: context.colorScheme.error,
+                    ),
+                  ),
+                );
+              }
+
+              return FilledButton(
                 onPressed: () {
                   _authBloc.add(const AuthEvent.signInWithOAuth());
                 },
                 child: Text(
-                  "Error! Try again",
+                  "Authenticate with OAuth",
                   style: context.textTheme.titleLarge?.copyWith(
-                    color: context.colorScheme.error,
+                    color: context.colorScheme.onPrimary,
                   ),
                 ),
               );
-            }
-
-            return FilledButton(
-              onPressed: () {
-                _authBloc.add(const AuthEvent.signInWithOAuth());
-              },
-              child: Text(
-                "Authenticate with OAuth",
-                style: context.textTheme.titleLarge?.copyWith(
-                  color: context.colorScheme.onPrimary,
-                ),
-              ),
-            );
-          },
+            },
+          ),
         ),
       ),
     );

@@ -28,22 +28,8 @@ class _MaterialContextState extends State<MaterialContext> {
   Widget build(BuildContext context) {
     return MaterialApp.router(
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        useMaterial3: true,
-        textTheme: GoogleFonts.outfitTextTheme(),
-        colorScheme: ColorScheme.fromSeed(
-          seedColor: Colors.greenAccent,
-          brightness: Brightness.light,
-        ),
-      ),
-      darkTheme: ThemeData(
-        useMaterial3: true,
-        textTheme: GoogleFonts.outfitTextTheme(),
-        colorScheme: ColorScheme.fromSeed(
-          seedColor: Colors.greenAccent,
-          brightness: Brightness.dark,
-        ),
-      ),
+      theme: _buildTheme(Brightness.light),
+      darkTheme: _buildTheme(Brightness.dark),
       themeMode: ThemeMode.system,
       routerConfig: _router,
       builder:
@@ -56,4 +42,19 @@ class _MaterialContextState extends State<MaterialContext> {
           ),
     );
   }
+}
+
+ThemeData _buildTheme(Brightness brightness) {
+  final baseTheme = switch (brightness) {
+    Brightness.light => ThemeData.light(useMaterial3: true),
+    Brightness.dark => ThemeData.dark(useMaterial3: true),
+  };
+
+  return baseTheme.copyWith(
+    colorScheme: ColorScheme.fromSeed(
+      seedColor: Colors.greenAccent,
+      brightness: brightness,
+    ),
+    textTheme: GoogleFonts.outfitTextTheme(baseTheme.textTheme),
+  );
 }

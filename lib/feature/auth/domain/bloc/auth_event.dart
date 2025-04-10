@@ -11,8 +11,14 @@ sealed class AuthEvent {
 
 final class _SignInWithOAuth extends AuthEvent {
   const _SignInWithOAuth();
+
+  @override
+  String toString() => "Sign in with OAuth event";
 }
 
 final class _SignOut extends AuthEvent {
   const _SignOut();
+
+  @override
+  String toString() => "Sign out event";
 }
