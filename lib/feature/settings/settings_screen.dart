@@ -34,7 +34,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   _authBloc.add(const AuthEvent.signOut());
                 },
                 trailing:
-                    state.isProcessing
+                    state.isProcessing || state.isUnauthenticated
                         ? CircularProgressIndicator.adaptive(
                           backgroundColor: context.colorScheme.onPrimary,
                           constraints: BoxConstraints.tight(Size(20, 20)),

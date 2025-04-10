@@ -19,6 +19,8 @@ sealed class AuthState with EquatableMixin {
 
   bool get isProcessing => this is _AuthStateProcessing;
   bool get isError => this is _AuthStateError;
+  bool get isAuthenticated => status == AuthenticationStatus.authenticated;
+  bool get isUnauthenticated => status == AuthenticationStatus.unauthenticated;
 
   Object? get error => switch (this) {
     final _AuthStateError e => e.error,

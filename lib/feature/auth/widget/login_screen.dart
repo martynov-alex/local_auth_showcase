@@ -28,7 +28,7 @@ class _LoginScreenState extends State<LoginScreen> {
           constraints: BoxConstraints.tight(Size(300, 80)),
           child: BlocBuilder<AuthBloc, AuthState>(
             builder: (context, state) {
-              if (state.isProcessing) {
+              if (state.isProcessing || state.isAuthenticated) {
                 return FilledButton(
                   onPressed: () {},
                   child: CircularProgressIndicator.adaptive(
