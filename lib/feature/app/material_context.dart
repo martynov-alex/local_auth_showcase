@@ -15,13 +15,13 @@ class MaterialContext extends StatefulWidget {
 
 class _MaterialContextState extends State<MaterialContext> {
   late final GoRouter _router;
-  late final AuthBloc authBloc;
+  late final AuthBloc _authBloc;
 
   @override
   void initState() {
     super.initState();
-    authBloc = DependenciesScope.of(context).authBloc;
-    _router = AppRouter.getRouter(authBloc);
+    _authBloc = DependenciesScope.of(context).authBloc;
+    _router = AppRouter.getRouter(_authBloc);
   }
 
   @override

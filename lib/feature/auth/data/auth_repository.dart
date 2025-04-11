@@ -11,7 +11,6 @@ final class AuthRepositoryImpl<T> implements AuthRepository<T> {
   final AuthDataSource<T> _dataSource;
   final TokenStorage<T> _storage;
 
-  /// Create an [AuthRepositoryImpl]
   const AuthRepositoryImpl({
     required AuthDataSource<T> dataSource,
     required TokenStorage<T> storage,

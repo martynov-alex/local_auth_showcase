@@ -15,11 +15,10 @@ import 'package:shared_preferences/shared_preferences.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  logging.Logger.root.level = logging.Level.ALL; // defaults to Level.INFO
+  logging.Logger.root.level = logging.Level.ALL;
   logging.Logger.root.onRecord.listen((record) {
     log('${record.level.name}: ${record.time}: ${record.message}');
   });
-
   final logger = logging.Logger('Local Auth Showcase');
   Bloc.observer = AppBlocObserver(logger);
 
