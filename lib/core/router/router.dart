@@ -5,17 +5,16 @@ import 'package:go_router/go_router.dart';
 import 'package:local_auth_showcase/core/router/auth_guard.dart';
 import 'package:local_auth_showcase/core/router/redirect_builder.dart';
 import 'package:local_auth_showcase/core/router/routes.dart';
-import 'package:local_auth_showcase/feature/auth/domain/bloc/auth_bloc.dart';
 
 class AppRouter {
   static final GlobalKey<NavigatorState> rootNavigatorKey =
       GlobalKey<NavigatorState>();
 
-  static GoRouter getRouter(AuthBloc authBloc) => GoRouter(
+  static GoRouter getRouter(StreamToListenable listenable) => GoRouter(
     navigatorKey: rootNavigatorKey,
     initialLocation: '/login',
     routes: $appRoutes,
-    refreshListenable: StreamToListenable([authBloc.stream]),
+    refreshListenable: listenable,
     redirect:
         RedirectBuilder({
           RedirectIfAuthenticatedGuard(),
@@ -24,14 +23,13 @@ class AppRouter {
   );
 }
 
-// for convert stream to listenable
+// Converts stream to listenable.
 class StreamToListenable extends ChangeNotifier {
-  late final List<StreamSubscription> subscriptions;
+  final List<StreamSubscription> subscriptions = [];
 
   StreamToListenable(List<Stream> streams) {
-    subscriptions = [];
-    for (var e in streams) {
-      var s = e.asBroadcastStream().listen(_tt);
+    for (final e in streams) {
+      final s = e.asBroadcastStream().listen(_tt);
       subscriptions.add(s);
     }
     notifyListeners();

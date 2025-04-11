@@ -15,13 +15,21 @@ class MaterialContext extends StatefulWidget {
 
 class _MaterialContextState extends State<MaterialContext> {
   late final GoRouter _router;
+  late final StreamToListenable _listenable;
   late final AuthBloc _authBloc;
 
   @override
   void initState() {
     super.initState();
     _authBloc = DependenciesScope.of(context).authBloc;
-    _router = AppRouter.getRouter(_authBloc);
+    _listenable = StreamToListenable([_authBloc.stream]);
+    _router = AppRouter.getRouter(_listenable);
+  }
+
+  @override
+  void dispose() {
+    _listenable.dispose();
+    super.dispose();
   }
 
   @override
