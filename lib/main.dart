@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:local_auth_showcase/core/service/error_handler.dart';
 import 'package:local_auth_showcase/core/utils/app_bloc_observer.dart';
 import 'package:local_auth_showcase/feature/app/app.dart';
 import 'package:local_auth_showcase/feature/auth/data/auth_data_source.dart';
@@ -9,6 +10,11 @@ import 'package:local_auth_showcase/feature/auth/data/auth_repository.dart';
 import 'package:local_auth_showcase/feature/auth/data/token_storage.dart';
 import 'package:local_auth_showcase/feature/auth/domain/bloc/auth_bloc.dart';
 import 'package:local_auth_showcase/feature/auth/domain/entity/authentication_status.dart';
+import 'package:local_auth_showcase/feature/local_auth/data/local_storage/local_storage.dart';
+import 'package:local_auth_showcase/feature/local_auth/data/repository/repository.dart';
+import 'package:local_auth_showcase/feature/local_auth/data/repository/repository_impl.dart';
+import 'package:local_auth_showcase/feature/local_auth/domain/bloc/local_auth_status/bloc.dart';
+import 'package:local_auth_showcase/feature/local_auth/domain/bloc/pin_code_auth/bloc.dart';
 import 'package:logging/logging.dart' as logging;
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -22,13 +28,14 @@ void main() async {
   final logger = logging.Logger('Local Auth Showcase');
   Bloc.observer = AppBlocObserver(logger);
 
-  final dependencies = await _initDependencies();
+  final dependencies = await _initDependencies(logger);
 
   runApp(App(dependencies: dependencies));
 }
 
-Future<Dependencies> _initDependencies() async {
+Future<Dependencies> _initDependencies(logging.Logger logger) async {
   final sharedPreferences = await SharedPreferences.getInstance();
+  final errorHandler = ErrorHandler(logger);
   final storage = TokenStorageImpl(sharedPreferences: sharedPreferences);
   final token = await storage.load();
 
@@ -43,15 +50,50 @@ Future<Dependencies> _initDependencies() async {
       dataSource: FakeAuthDataSource(),
       storage: storage,
     ),
+    errorHandler: errorHandler,
   );
 
-  return Dependencies(sharedPreferences: sharedPreferences, authBloc: authBloc);
+  final localAuthLocalStorage = LocalAuthLocalStorageImpl(sharedPreferences);
+
+  final localAuthRepository = LocalAuthRepositoryImpl(
+    settingsStorage: localAuthLocalStorage,
+    backgroundTimeStorage: localAuthLocalStorage,
+  );
+
+  final localAuthStatusBloc = LocalAuthStatusBloc(
+    localAuthRepository: localAuthRepository,
+    errorHandler: errorHandler,
+  );
+
+  final pinCodeAuthBloc = PinCodeAuthBloc(
+    localAuthRepository: localAuthRepository,
+    errorHandler: errorHandler,
+  );
+
+  return Dependencies(
+    sharedPreferences: sharedPreferences,
+    errorHandler: errorHandler,
+    authBloc: authBloc,
+    localAuthRepository: localAuthRepository,
+    localAuthStatusBloc: localAuthStatusBloc,
+    pinCodeAuthBloc: pinCodeAuthBloc,
+  );
 }
 
 base class Dependencies {
-  const Dependencies({required this.sharedPreferences, required this.authBloc});
+  const Dependencies({
+    required this.sharedPreferences,
+    required this.errorHandler,
+    required this.authBloc,
+    required this.localAuthRepository,
+    required this.localAuthStatusBloc,
+    required this.pinCodeAuthBloc,
+  });
 
   final SharedPreferences sharedPreferences;
-
+  final ErrorHandler errorHandler;
   final AuthBloc authBloc;
+  final LocalAuthRepository localAuthRepository;
+  final LocalAuthStatusBloc localAuthStatusBloc;
+  final PinCodeAuthBloc pinCodeAuthBloc;
 }
