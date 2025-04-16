@@ -3,6 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:local_auth_showcase/core/extensions/context_extension.dart';
 import 'package:local_auth_showcase/feature/app/material_context.dart';
 import 'package:local_auth_showcase/feature/auth/domain/bloc/auth_bloc.dart';
+import 'package:local_auth_showcase/feature/local_auth/domain/bloc/local_auth_status/bloc.dart';
+import 'package:local_auth_showcase/feature/local_auth/domain/bloc/pin_code_auth/bloc.dart';
 import 'package:local_auth_showcase/main.dart';
 
 class App extends StatelessWidget {
@@ -18,6 +20,12 @@ class App extends StatelessWidget {
         providers: [
           BlocProvider<AuthBloc>(
             create: (BuildContext context) => dependencies.authBloc,
+          ),
+          BlocProvider<LocalAuthStatusBloc>(
+            create: (BuildContext context) => dependencies.localAuthStatusBloc,
+          ),
+          BlocProvider<PinCodeAuthBloc>(
+            create: (BuildContext context) => dependencies.pinCodeAuthBloc,
           ),
         ],
         child: MaterialContext(),

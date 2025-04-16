@@ -230,6 +230,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "9.1.0"
+  flutter_easy_dialogs:
+    dependency: "direct main"
+    description:
+      name: flutter_easy_dialogs
+      sha256: e488d27d498180ade82e009b0414c1c59eb96f93612c3c9bf9781cd85b2fb5a7
+      url: "https://pub.dev"
+    source: hosted
+    version: "4.0.3"
   flutter_lints:
     dependency: "direct dev"
     description:
@@ -320,6 +328,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.3.2"
+  haptic_feedback:
+    dependency: "direct main"
+    description:
+      name: haptic_feedback
+      sha256: d3b5ad41858d18a35d317636c9cdc1cb8aef23c7b861ca5896273acc68e1a98a
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.5.1+1"
   http:
     dependency: transitive
     description:
@@ -496,6 +512,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.0.0"
+  modal_bottom_sheet:
+    dependency: "direct main"
+    description:
+      name: modal_bottom_sheet
+      sha256: eac66ef8cb0461bf069a38c5eb0fa728cee525a531a8304bd3f7b2185407c67e
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.0.0"
   nested:
     dependency: transitive
     description:

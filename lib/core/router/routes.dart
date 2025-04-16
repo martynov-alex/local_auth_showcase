@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:local_auth_showcase/feature/auth/widget/login_screen.dart';
+import 'package:local_auth_showcase/feature/local_auth/ui/initial_screen.dart';
+import 'package:local_auth_showcase/feature/local_auth/ui/settings_screen.dart';
 import 'package:local_auth_showcase/feature/root/root_screen.dart';
 import 'package:local_auth_showcase/feature/settings/settings_screen.dart';
 import 'package:local_auth_showcase/feature/top_secret_data/top_secret_data_screen.dart';
@@ -9,23 +11,29 @@ part 'routes.g.dart';
 
 final GlobalKey<NavigatorState> shellNavigatorKey = GlobalKey<NavigatorState>();
 
-@TypedGoRoute<LoginRoute>(path: '/login')
-class LoginRoute extends GoRouteData {
-  const LoginRoute();
+@TypedGoRoute<LoginRouteData>(path: '/login')
+class LoginRouteData extends GoRouteData {
+  const LoginRouteData();
 
   @override
   Widget build(BuildContext context, GoRouterState state) =>
       const LoginScreen();
 }
 
-@TypedShellRoute<RootRoute>(
+@TypedShellRoute<RootRouteData>(
   routes: <TypedRoute<RouteData>>[
-    TypedGoRoute<TopSecretDataRoute>(path: '/top-secret-data'),
-    TypedGoRoute<SettingsRoute>(path: '/settings'),
+    TypedGoRoute<TopSecretDataRouteData>(path: '/top-secret-data'),
+    TypedGoRoute<SettingsRouteData>(
+      path: '/settings',
+      routes: <TypedRoute<RouteData>>[
+        TypedGoRoute<LocalAuthInitialRouteData>(path: '/local-auth-initial'),
+        TypedGoRoute<LocalAuthSettingsRouteData>(path: '/local-auth-settings'),
+      ],
+    ),
   ],
 )
-class RootRoute extends ShellRouteData {
-  const RootRoute();
+class RootRouteData extends ShellRouteData {
+  const RootRouteData();
 
   static final GlobalKey<NavigatorState> $navigatorKey = shellNavigatorKey;
 
@@ -35,18 +43,34 @@ class RootRoute extends ShellRouteData {
   }
 }
 
-class TopSecretDataRoute extends GoRouteData {
-  const TopSecretDataRoute();
+class TopSecretDataRouteData extends GoRouteData {
+  const TopSecretDataRouteData();
 
   @override
   Widget build(BuildContext context, GoRouterState state) =>
       const TopSecretDataScreen();
 }
 
-class SettingsRoute extends GoRouteData {
-  const SettingsRoute();
+class SettingsRouteData extends GoRouteData {
+  const SettingsRouteData();
 
   @override
   Widget build(BuildContext context, GoRouterState state) =>
       const SettingsScreen();
+}
+
+class LocalAuthInitialRouteData extends GoRouteData {
+  const LocalAuthInitialRouteData();
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) =>
+      const LocalAuthInitialScreen();
+}
+
+class LocalAuthSettingsRouteData extends GoRouteData {
+  const LocalAuthSettingsRouteData();
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) =>
+      const LocalAuthSettingsScreen();
 }

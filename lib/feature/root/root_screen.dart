@@ -42,9 +42,9 @@ class _RootScreenState extends State<RootScreen> {
         onDestinationSelected: (int index) {
           switch (index) {
             case 0:
-              const TopSecretDataRoute().go(context);
+              const TopSecretDataRouteData().go(context);
             case 1:
-              const SettingsRoute().go(context);
+              const SettingsRouteData().go(context);
           }
         },
       ),
