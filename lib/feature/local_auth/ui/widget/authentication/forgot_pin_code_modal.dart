@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:local_auth_showcase/core/extensions/theme_extension.dart';
 
 class ForgotPinCodeModal extends StatelessWidget {
   const ForgotPinCodeModal({
@@ -12,41 +13,56 @@ class ForgotPinCodeModal extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.end,
-        children: [
-          Expanded(
-            child: GestureDetector(
-              onTap: onCancelTap,
-              behavior: HitTestBehavior.opaque,
-              child: const SizedBox.expand(),
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.end,
+      children: [
+        Expanded(
+          child: GestureDetector(
+            onTap: onCancelTap,
+            behavior: HitTestBehavior.opaque,
+            child: const SizedBox.expand(),
+          ),
+        ),
+        Dialog(
+          insetPadding: EdgeInsets.all(16.0),
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: <Widget>[
+                Text(
+                  'Забыли пин-код?',
+                  textAlign: TextAlign.center,
+                  style: context.textTheme.headlineSmall,
+                ),
+                const SizedBox(height: 16),
+                Text(
+                  'После сброса пин-кода нужно\nбудет авторизоваться заново',
+                  textAlign: TextAlign.center,
+                  style: context.textTheme.titleMedium,
+                ),
+                const SizedBox(height: 16),
+                FilledButton(
+                  onPressed: onConfirmTap,
+                  child: Text(
+                    'Окей',
+                    style: context.textTheme.titleMedium?.copyWith(
+                      color: context.colorScheme.onPrimary,
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 8),
+                OutlinedButton(
+                  onPressed: onCancelTap,
+                  child: Text('Отмена', style: context.textTheme.titleMedium),
+                ),
+              ],
             ),
           ),
-          Dialog.fullscreen(
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  const Text('localAuthModalForgotPinTitle'),
-                  const SizedBox(height: 15),
-                  TextButton(
-                    onPressed: onConfirmTap,
-                    child: const Text('localAuthModalForgotPinButton'),
-                  ),
-                  const SizedBox(height: 15),
-                  TextButton(
-                    onPressed: onCancelTap,
-                    child: const Text('cancel'),
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }

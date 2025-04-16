@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_easy_dialogs/flutter_easy_dialogs.dart';
 import 'package:local_auth_showcase/core/router/modal/pin_code_setting.dart';
 import 'package:local_auth_showcase/core/router/routes.dart';
 import 'package:local_auth_showcase/feature/local_auth/data/repository/repository.dart';
@@ -9,7 +10,10 @@ import 'package:local_auth_showcase/feature/local_auth/domain/bloc/biometrics_av
 import 'package:local_auth_showcase/feature/local_auth/domain/bloc/local_auth_status/bloc.dart';
 import 'package:local_auth_showcase/feature/local_auth/domain/bloc/pin_code_auth/bloc.dart';
 import 'package:local_auth_showcase/feature/local_auth/domain/exception/local_auth_exception.dart';
+import 'package:local_auth_showcase/feature/local_auth/ui/widget/common/modal_dialog.dart';
 import 'package:local_auth_showcase/feature/local_auth/ui/widget/settings/disable_modal.dart';
+
+const _localAuthModalId = 'LocalAuthModal';
 
 class LocalAuthSettingsView extends StatefulWidget {
   const LocalAuthSettingsView({super.key});
@@ -63,17 +67,17 @@ class _LocalAuthSettingsViewState extends State<LocalAuthSettingsView> {
   }
 
   Future<void> _showDisableModal(VoidCallback onTap) async {
-    await showDialog(
-      context: context,
-      builder:
-          (BuildContext context) => SafeArea(
-            child: LocalAuthDisableModal(
-              onConfirmTap: () {
-                onTap.call();
-              },
-              onCancelTap: () {},
-            ),
-          ),
+    await showModalDialog(
+      id: _localAuthModalId,
+      content: LocalAuthDisableModal(
+        onConfirmTap: () async {
+          await FlutterEasyDialogs.hide(id: _localAuthModalId, instantly: true);
+          onTap.call();
+        },
+        onCancelTap: () async {
+          await FlutterEasyDialogs.hide(id: _localAuthModalId);
+        },
+      ),
     );
   }
 
@@ -108,10 +112,10 @@ class _LocalAuthSettingsViewState extends State<LocalAuthSettingsView> {
             onTap: () async {
               await openPinCodeSettingModal(
                 context,
-                enteringStageText: "localAuthCreateNewPinCode",
+                enteringStageText: "Введите новый пин-код",
               );
             },
-            title: Text("localAuthChangePinCode"),
+            title: Text("Изменить пин-код"),
             trailing: const Icon(Icons.arrow_forward_ios_rounded),
           ),
           ListTile(
@@ -119,7 +123,7 @@ class _LocalAuthSettingsViewState extends State<LocalAuthSettingsView> {
               await _showDisableModal(_onDisablePinCodeTap);
             },
 
-            title: Text("localAuthDisablePinCode"),
+            title: Text("Отключить локальную аутентификацию"),
           ),
           _SettingsTrailing(onTap: _onBiometricsSwitchTap),
           const SizedBox.square(dimension: kBottomNavigationBarHeight),
@@ -144,14 +148,14 @@ class _SettingsTrailing extends StatelessWidget {
   ) {
     if (Theme.of(context).platform == TargetPlatform.iOS &&
         availableBiometrics.containsFace) {
-      return "localAuthBiometricsSwitchFace";
+      return "Face ID";
     }
     if (Theme.of(context).platform == TargetPlatform.iOS &&
         availableBiometrics.containsFingerprint) {
-      return "localAuthBiometricsSwitchFingerprint";
+      return "Touch ID";
     }
 
-    return "localAuthBiometricsSwitch";
+    return "Быстрый вход";
   }
 
   String _switchSubtitleOf(
@@ -161,10 +165,10 @@ class _SettingsTrailing extends StatelessWidget {
     if (Theme.of(context).platform == TargetPlatform.iOS &&
         (availableBiometrics.containsFace ||
             availableBiometrics.containsFingerprint)) {
-      return "localAuthBiometricsSwitchReason";
+      return "Для быстрого входа в приложение";
     }
 
-    return "localAuthBiometricsSwitchAny";
+    return "По лицу или отпечатку пальца";
   }
 
   @override
@@ -178,7 +182,6 @@ class _SettingsTrailing extends StatelessWidget {
           return BlocBuilder<LocalAuthStatusBloc, LocalAuthStatusState>(
             builder: (_, authStatusState) {
               return ListTile(
-                contentPadding: const EdgeInsets.fromLTRB(20, 4, 20, 8),
                 title: Text(
                   _switchTitleOf(context, biometricsState.availableBiometrics),
                 ),

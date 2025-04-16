@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:local_auth_showcase/core/extensions/theme_extension.dart';
+import 'package:local_auth_showcase/core/router/routes.dart';
 import 'package:local_auth_showcase/feature/auth/domain/bloc/auth_bloc.dart';
 
 class SettingsScreen extends StatefulWidget {
@@ -22,13 +23,26 @@ class _SettingsScreenState extends State<SettingsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Settings"), centerTitle: true),
+      appBar: AppBar(title: Text("Настройки"), centerTitle: true),
       body: ListView(
         children: [
+          ListTile(
+            title: Text(
+              "Локальная аутентификация",
+              style: context.textTheme.titleLarge,
+            ),
+            onTap: () {
+              LocalAuthInitialRouteData().go(context);
+            },
+            trailing: Icon(Icons.security),
+          ),
           BlocBuilder<AuthBloc, AuthState>(
             builder: (context, state) {
               return ListTile(
-                title: Text("Sign out", style: context.textTheme.titleLarge),
+                title: Text(
+                  "Выйти из аккаунта",
+                  style: context.textTheme.titleLarge,
+                ),
                 onTap: () {
                   _authBloc.add(const AuthEvent.signOut());
                 },

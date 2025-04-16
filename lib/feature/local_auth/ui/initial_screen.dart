@@ -48,27 +48,25 @@ class _LocalAuthInitialMainState extends State<_LocalAuthInitialMain> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: BlocBuilder<LocalAuthStatusBloc, LocalAuthStatusState>(
-        builder: (context, state) {
-          return switch (state) {
-            LocalAuthStatusLoading() => const SizedBox.shrink(),
-            LocalAuthStatusError() => const SizedBox.shrink(),
-            LocalAuthStatusData(isPinCodeSet: true) =>
-              LocalAuthAuthenticationView(
-                isBiometricsEnabled: false,
-                onSuccess: () {
-                  LocalAuthSettingsRouteData().go(context);
-                },
-                onFailure: () {
-                  _authBloc.add(const AuthEvent.signOut());
-                },
-              ),
-            LocalAuthStatusData(isPinCodeSet: false) =>
-              const LocalAuthOnboardingView(),
-          };
-        },
-      ),
+    return BlocBuilder<LocalAuthStatusBloc, LocalAuthStatusState>(
+      builder: (context, state) {
+        return switch (state) {
+          LocalAuthStatusLoading() => const SizedBox.shrink(),
+          LocalAuthStatusError() => const SizedBox.shrink(),
+          LocalAuthStatusData(isPinCodeSet: true) =>
+            LocalAuthAuthenticationView(
+              isBiometricsEnabled: false,
+              onSuccess: () {
+                LocalAuthSettingsRouteData().go(context);
+              },
+              onFailure: () {
+                _authBloc.add(const AuthEvent.signOut());
+              },
+            ),
+          LocalAuthStatusData(isPinCodeSet: false) =>
+            const LocalAuthOnboardingView(),
+        };
+      },
     );
   }
 }

@@ -37,11 +37,10 @@ class _CircleNumberButtonState extends State<CircleNumberButton> {
                   ? context.colorScheme.primary
                   : context.colorScheme.secondary,
         ),
-        child: Padding(
-          padding: const EdgeInsets.only(top: 4),
-          child: Text(
-            widget.number.toString(),
-            style: context.textTheme.labelMedium,
+        child: Text(
+          widget.number.toString(),
+          style: context.textTheme.headlineLarge?.copyWith(
+            color: context.colorScheme.onSecondary,
           ),
         ),
         onEnd: () => setState(() => _isPressed = false),

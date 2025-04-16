@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:local_auth_showcase/feature/app/app.dart';
 import 'package:local_auth_showcase/feature/auth/widget/login_screen.dart';
 import 'package:local_auth_showcase/feature/local_auth/ui/initial_screen.dart';
 import 'package:local_auth_showcase/feature/local_auth/ui/settings_screen.dart';
@@ -25,9 +26,9 @@ class LoginRouteData extends GoRouteData {
     TypedGoRoute<TopSecretDataRouteData>(path: '/top-secret-data'),
     TypedGoRoute<SettingsRouteData>(
       path: '/settings',
-      routes: <TypedRoute<RouteData>>[
-        TypedGoRoute<LocalAuthInitialRouteData>(path: '/local-auth-initial'),
-        TypedGoRoute<LocalAuthSettingsRouteData>(path: '/local-auth-settings'),
+      routes: <TypedRoute<GoRouteData>>[
+        TypedGoRoute<LocalAuthInitialRouteData>(path: 'local-auth-initial'),
+        TypedGoRoute<LocalAuthSettingsRouteData>(path: 'local-auth-settings'),
       ],
     ),
   ],
@@ -63,14 +64,18 @@ class LocalAuthInitialRouteData extends GoRouteData {
   const LocalAuthInitialRouteData();
 
   @override
-  Widget build(BuildContext context, GoRouterState state) =>
-      const LocalAuthInitialScreen();
+  Widget build(BuildContext context, GoRouterState state) {
+    final dependencies = DependenciesScope.of(context);
+    return const LocalAuthInitialScreen().wrappedRoute(dependencies);
+  }
 }
 
 class LocalAuthSettingsRouteData extends GoRouteData {
   const LocalAuthSettingsRouteData();
 
   @override
-  Widget build(BuildContext context, GoRouterState state) =>
-      const LocalAuthSettingsScreen();
+  Widget build(BuildContext context, GoRouterState state) {
+    final dependencies = DependenciesScope.of(context);
+    return const LocalAuthSettingsScreen().wrappedRoute(dependencies);
+  }
 }

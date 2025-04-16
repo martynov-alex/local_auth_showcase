@@ -15,16 +15,19 @@ class _TopSecretDataScreenState extends State<TopSecretDataScreen> {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Text(
-          "Top Secret Data",
+          "Супер\nсекретные\nданные",
+          textAlign: TextAlign.center,
           style: context.textTheme.headlineLarge?.copyWith(
             color: context.colorScheme.error,
+            fontWeight: FontWeight.bold,
+            fontSize: 60,
           ),
         ),
         const SizedBox(height: 20),
         Icon(
           Icons.dataset_outlined,
           color: context.colorScheme.error,
-          size: 100,
+          size: 200,
         ),
       ],
     );

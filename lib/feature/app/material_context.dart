@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_easy_dialogs/flutter_easy_dialogs.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:local_auth_showcase/core/router/router.dart';
@@ -41,12 +42,14 @@ class _MaterialContextState extends State<MaterialContext> {
       themeMode: ThemeMode.system,
       routerConfig: _router,
       builder:
-          (context, child) => AnnotatedRegion<SystemUiOverlayStyle>(
-            value:
-                MediaQuery.of(context).platformBrightness == Brightness.dark
-                    ? SystemUiOverlayStyle.light
-                    : SystemUiOverlayStyle.dark,
-            child: child!,
+          (context, child) => FlutterEasyDialogs(
+            child: AnnotatedRegion<SystemUiOverlayStyle>(
+              value:
+                  MediaQuery.of(context).platformBrightness == Brightness.dark
+                      ? SystemUiOverlayStyle.light
+                      : SystemUiOverlayStyle.dark,
+              child: child!,
+            ),
           ),
     );
   }
@@ -63,6 +66,6 @@ ThemeData _buildTheme(Brightness brightness) {
       seedColor: Colors.greenAccent,
       brightness: brightness,
     ),
-    textTheme: GoogleFonts.outfitTextTheme(baseTheme.textTheme),
+    textTheme: GoogleFonts.jostTextTheme(baseTheme.textTheme),
   );
 }

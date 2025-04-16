@@ -58,7 +58,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   _authBloc.add(const AuthEvent.signInWithOAuth());
                 },
                 child: Text(
-                  "Authenticate with OAuth",
+                  "Аутентификация с OAuth",
                   style: context.textTheme.titleLarge?.copyWith(
                     color: context.colorScheme.onPrimary,
                   ),

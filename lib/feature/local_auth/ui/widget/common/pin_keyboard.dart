@@ -93,7 +93,7 @@ class PinKeyboard extends StatelessWidget {
                   textButtonTitle,
                   textAlign: TextAlign.center,
                   overflow: TextOverflow.visible,
-                  style: context.textTheme.labelMedium,
+                  style: context.textTheme.titleSmall,
                 ),
               ),
               const SizedBox.square(dimension: _buttonSpacing),

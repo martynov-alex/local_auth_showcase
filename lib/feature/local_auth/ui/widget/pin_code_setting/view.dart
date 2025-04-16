@@ -112,10 +112,11 @@ class _PinCodeSettingViewState extends State<PinCodeSettingView> {
                     flex: 3,
                     child: PinKeyboard(
                       isBlocked: state.isErrorOrSuccess,
-                      textButtonTitle: "cancel",
+                      textButtonTitle: "Отмена",
                       iconButtonChild: Icon(
-                        Icons.backspace,
-                        color: context.colorScheme.onPrimary,
+                        Icons.keyboard_backspace,
+                        color: context.colorScheme.secondary,
+                        size: 40,
                       ),
                       onIconTap: _onBackspaceTap,
                       onTextTap: _onCancelTap,
@@ -131,7 +132,7 @@ class _PinCodeSettingViewState extends State<PinCodeSettingView> {
             top: 20,
             child: GestureDetector(
               onTap: _onCloseIconTap,
-              child: Icon(Icons.close, color: context.colorScheme.onPrimary),
+              child: Icon(Icons.close, color: context.colorScheme.secondary),
             ),
           ),
         ],
@@ -146,9 +147,9 @@ class _RepeatingPinStatus extends StatelessWidget {
   final PinCodeSettingState state;
 
   String getConfirmedStageText(BuildContext context) {
-    if (!state.isConfirmedPinLengthReached) return "localAuthRepeatPinCode";
-    if (state.isMatch) return "localAuthPinCodeMatch";
-    return "localAuthPinCodeDoNotMatch";
+    if (!state.isConfirmedPinLengthReached) return "Повторите пин-код";
+    if (state.isMatch) return "Все верно!";
+    return "Пин-код не совпадает!";
   }
 
   Color? getIndicatorColor(BuildContext context) {

@@ -2,8 +2,8 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 
-const _maxAttemptsBeforeWarning = 7;
-const _maxAttemptsBeforeLogout = 10;
+const _maxAttemptsBeforeWarning = 1;
+const _maxAttemptsBeforeLogout = 5;
 
 /// Сущность количества попыток ввода пин-кода.
 @immutable

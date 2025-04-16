@@ -35,7 +35,7 @@ class PinIndicator extends StatelessWidget {
       children: [
         Text(
           statusText,
-          style: context.textTheme.labelMedium?.copyWith(
+          style: context.textTheme.titleMedium?.copyWith(
             color: indicatorTextColor,
           ),
         ),
@@ -63,7 +63,7 @@ class PinIndicator extends StatelessWidget {
     final indicatorDotColor = this.indicatorDotColor;
 
     if (indicatorDotColor != null) return indicatorDotColor;
-    if (index < currentPinLength) return context.colorScheme.tertiary;
-    return context.colorScheme.primary;
+    if (index < currentPinLength) return context.colorScheme.primary;
+    return context.colorScheme.outlineVariant;
   }
 }

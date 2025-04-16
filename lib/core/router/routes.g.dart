@@ -45,12 +45,12 @@ RouteBase get $rootRouteData => ShellRouteData.$route(
       factory: $SettingsRouteDataExtension._fromState,
       routes: [
         GoRouteData.$route(
-          path: '/local-auth-initial',
+          path: 'local-auth-initial',
 
           factory: $LocalAuthInitialRouteDataExtension._fromState,
         ),
         GoRouteData.$route(
-          path: '/local-auth-settings',
+          path: 'local-auth-settings',
 
           factory: $LocalAuthSettingsRouteDataExtension._fromState,
         ),
@@ -99,7 +99,7 @@ extension $LocalAuthInitialRouteDataExtension on LocalAuthInitialRouteData {
   static LocalAuthInitialRouteData _fromState(GoRouterState state) =>
       const LocalAuthInitialRouteData();
 
-  String get location => GoRouteData.$location('/local-auth-initial');
+  String get location => GoRouteData.$location('/settings/local-auth-initial');
 
   void go(BuildContext context) => context.go(location);
 
@@ -115,7 +115,7 @@ extension $LocalAuthSettingsRouteDataExtension on LocalAuthSettingsRouteData {
   static LocalAuthSettingsRouteData _fromState(GoRouterState state) =>
       const LocalAuthSettingsRouteData();
 
-  String get location => GoRouteData.$location('/local-auth-settings');
+  String get location => GoRouteData.$location('/settings/local-auth-settings');
 
   void go(BuildContext context) => context.go(location);
 

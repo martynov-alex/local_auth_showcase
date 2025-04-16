@@ -13,6 +13,7 @@ import 'package:local_auth_showcase/feature/local_auth/domain/bloc/pin_code_auth
 import 'package:local_auth_showcase/feature/local_auth/domain/exception/local_auth_exception.dart';
 import 'package:local_auth_showcase/feature/local_auth/ui/widget/authentication/forgot_pin_code_modal.dart';
 import 'package:local_auth_showcase/feature/local_auth/ui/widget/authentication/no_more_attempts_modal.dart';
+import 'package:local_auth_showcase/feature/local_auth/ui/widget/common/modal_dialog.dart';
 import 'package:local_auth_showcase/feature/local_auth/ui/widget/common/pin_indicator.dart';
 import 'package:local_auth_showcase/feature/local_auth/ui/widget/common/pin_keyboard.dart';
 
@@ -29,7 +30,7 @@ const _mismatchResetWaitDuration = Duration(seconds: 1);
 const _availableAttemptsAreOverWaitDuration = Duration(seconds: 2);
 
 /// Идентификатор модалки для FlutterEasyDialogs
-const _localAuthModalId = ObjectKey('LocalAuthModal');
+const _localAuthModalId = 'LocalAuthModal';
 
 class LocalAuthAuthenticationView extends StatefulWidget {
   const LocalAuthAuthenticationView({
@@ -152,7 +153,10 @@ class _LocalAuthAuthenticationViewState
     required bool isPinEmpty,
   }) {
     if (!_ableUseBiometrics || !isPinEmpty) {
-      return Icon(Icons.backspace, color: context.colorScheme.onPrimary);
+      return Icon(
+        Icons.keyboard_backspace,
+        color: context.colorScheme.onPrimary,
+      );
     }
 
     if (Theme.of(context).platform == TargetPlatform.android &&
@@ -162,7 +166,7 @@ class _LocalAuthAuthenticationViewState
 
     if (Theme.of(context).platform == TargetPlatform.iOS &&
         availableBiometrics.containsFace) {
-      return Icon(Icons.face, color: context.colorScheme.onPrimary);
+      return Icon(Icons.mood, color: context.colorScheme.onPrimary);
     }
 
     if (Theme.of(context).platform == TargetPlatform.iOS &&
@@ -170,7 +174,7 @@ class _LocalAuthAuthenticationViewState
       return Icon(Icons.fingerprint, color: context.colorScheme.onPrimary);
     }
 
-    return Icon(Icons.backspace, color: context.colorScheme.onPrimary);
+    return Icon(Icons.keyboard_backspace, color: context.colorScheme.onPrimary);
   }
 
   @override
@@ -246,13 +250,14 @@ class _LocalAuthAuthenticationViewState
                     isBlocked:
                         pinCodeAuthState.isNotEntering &&
                         biometricsState.isNotLoading,
-                    textButtonTitle: "localAuthTextButtonForgotPassword",
+                    textButtonTitle: "Забыл пин-код",
                     iconButtonChild: Builder(
                       builder: (_) {
                         if (!widget.isBiometricsEnabled) {
                           return Icon(
-                            Icons.backspace,
-                            color: context.colorScheme.onPrimary,
+                            Icons.keyboard_backspace,
+                            color: context.colorScheme.secondary,
+                            size: 40,
                           );
                         }
                         return switch (biometricsState) {
@@ -291,18 +296,8 @@ class _LocalAuthAuthenticationViewState
   }
 
   Future<void> _showForgotModal({required VoidCallback onTap}) async {
-    final modal = EasyDialog.positioned(
+    await showModalDialog(
       id: _localAuthModalId,
-      position: EasyDialogPosition.bottom,
-      animationConfiguration: const EasyDialogAnimationConfiguration.bounded(
-        duration: Duration(milliseconds: 200),
-      ),
-      decoration: const EasyDialogAnimation.fadeBackground(
-        backgroundColor: Colors.transparent,
-        blur: 10,
-        curve: Curves.easeInOut,
-      ),
-      autoHideDuration: null,
       content: ForgotPinCodeModal(
         onConfirmTap: () async {
           await FlutterEasyDialogs.hide(id: _localAuthModalId, instantly: true);
@@ -313,31 +308,17 @@ class _LocalAuthAuthenticationViewState
         },
       ),
     );
-
-    await modal.show();
   }
 
   Future<void> _showNoMoreAttemptsModal() async {
-    final modal = EasyDialog.positioned(
+    await showModalDialog(
       id: _localAuthModalId,
-      position: EasyDialogPosition.bottom,
-      animationConfiguration: const EasyDialogAnimationConfiguration.bounded(
-        duration: Duration(milliseconds: 200),
-      ),
-      decoration: const EasyDialogAnimation.fadeBackground(
-        backgroundColor: Colors.transparent,
-        blur: 10,
-        curve: Curves.easeInOut,
-      ),
-      autoHideDuration: null,
       content: NoMoreAttemptsModal(
         onConfirmTap: () async {
           await FlutterEasyDialogs.hide(id: _localAuthModalId, instantly: true);
         },
       ),
     );
-
-    await modal.show();
   }
 }
 
@@ -345,9 +326,9 @@ class _PinCodeStatus extends StatelessWidget {
   const _PinCodeStatus();
 
   String getStatusText(BuildContext context, PinCodeAuthState state) {
-    if (state.isAuthenticated) return "localAuthCorrectPinCode";
-    if (state.isError) return "localAuthWrongPinCode";
-    return "localAuthEnterPinCode";
+    if (state.isAuthenticated) return "Успешно!";
+    if (state.isError) return "Пин-код не верный";
+    return "Введите пин-код";
   }
 
   Color? getIndicatorColor(BuildContext context, PinCodeAuthState state) {
@@ -375,9 +356,9 @@ class _PinCodeStatus extends StatelessWidget {
                 ? Padding(
                   padding: const EdgeInsets.only(top: 12, bottom: 48),
                   child: Text(
-                    authBlocState.numberAttemptsBeforeLogout.toString(),
+                    'Осталось попыток ввода пин-кода: ${authBlocState.numberAttemptsBeforeLogout}',
 
-                    style: context.textTheme.labelMedium?.copyWith(
+                    style: context.textTheme.titleMedium?.copyWith(
                       color: getIndicatorColor(context, authBlocState),
                     ),
                   ),

@@ -27,6 +27,12 @@ class _LocalAuthSettingsMain extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(body: const LocalAuthSettingsView());
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Локальная аутентификация"),
+        centerTitle: true,
+      ),
+      body: const LocalAuthSettingsView(),
+    );
   }
 }

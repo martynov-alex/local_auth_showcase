@@ -29,14 +29,14 @@ class _RootScreenState extends State<RootScreen> {
       body: Center(child: widget.navigator),
       bottomNavigationBar: NavigationBar(
         labelTextStyle: WidgetStateTextStyle.resolveWith(
-          (_) => context.textTheme.labelLarge!,
+          (_) => context.textTheme.titleMedium!,
         ),
         destinations: const <NavigationDestination>[
           NavigationDestination(
-            icon: Icon(Icons.security),
-            label: 'Top Secret Data',
+            icon: Icon(Icons.dataset_outlined),
+            label: 'Секретно!',
           ),
-          NavigationDestination(icon: Icon(Icons.settings), label: 'Settings'),
+          NavigationDestination(icon: Icon(Icons.settings), label: 'Настройки'),
         ],
         selectedIndex: selectedIndex,
         onDestinationSelected: (int index) {
