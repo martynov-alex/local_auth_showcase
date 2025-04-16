@@ -1,12 +1,12 @@
 import 'package:local_auth_showcase/feature/auth/domain/entity/token.dart';
 
-abstract interface class AuthDataSource<T> {
-  Future<T> signInWithOAuth();
+abstract interface class AuthDataSource {
+  Future<Token> signInWithOAuth();
 
-  Future<void> signOut();
+  Future<void> logout();
 }
 
-final class FakeAuthDataSource implements AuthDataSource<Token> {
+final class FakeAuthDataSource implements AuthDataSource {
   const FakeAuthDataSource();
 
   @override
@@ -21,7 +21,7 @@ final class FakeAuthDataSource implements AuthDataSource<Token> {
   }
 
   @override
-  Future<void> signOut() async {
+  Future<void> logout() async {
     // Kinda fake sign out
     await Future.delayed(const Duration(seconds: 2));
   }

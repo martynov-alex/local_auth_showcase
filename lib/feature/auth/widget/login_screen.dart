@@ -45,7 +45,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     _authBloc.add(const AuthEvent.signInWithOAuth());
                   },
                   child: Text(
-                    "Error! Try again",
+                    "Ошибка аутентификации",
                     style: context.textTheme.titleLarge?.copyWith(
                       color: context.colorScheme.error,
                     ),

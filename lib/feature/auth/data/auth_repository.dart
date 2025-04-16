@@ -1,24 +1,25 @@
 import 'package:local_auth_showcase/feature/auth/data/auth_data_source.dart';
 import 'package:local_auth_showcase/feature/auth/data/token_storage.dart';
+import 'package:local_auth_showcase/feature/auth/domain/entity/token.dart';
 
-abstract interface class AuthRepository<T> {
-  Future<T> signInWithOAuth();
+abstract interface class AuthRepository {
+  Future<Token> signInWithOAuth();
 
-  Future<void> signOut();
+  Future<void> logout();
 }
 
-final class AuthRepositoryImpl<T> implements AuthRepository<T> {
-  final AuthDataSource<T> _dataSource;
-  final TokenStorage<T> _storage;
+final class AuthRepositoryImpl implements AuthRepository {
+  final AuthDataSource _dataSource;
+  final TokenStorage _storage;
 
   const AuthRepositoryImpl({
-    required AuthDataSource<T> dataSource,
-    required TokenStorage<T> storage,
+    required AuthDataSource dataSource,
+    required TokenStorage storage,
   }) : _dataSource = dataSource,
        _storage = storage;
 
   @override
-  Future<T> signInWithOAuth() async {
+  Future<Token> signInWithOAuth() async {
     final token = await _dataSource.signInWithOAuth();
     await _storage.save(token);
 
@@ -26,8 +27,8 @@ final class AuthRepositoryImpl<T> implements AuthRepository<T> {
   }
 
   @override
-  Future<void> signOut() async {
-    await _dataSource.signOut();
+  Future<void> logout() async {
+    await _dataSource.logout();
     await _storage.clear();
   }
 }

@@ -18,6 +18,7 @@ dependencies:
   go_router: 14.8.1
   google_fonts: 6.2.1
   haptic_feedback: 0.5.1+1
+  intl: 0.20.2
   json_annotation: 4.9.0
   local_auth: 2.3.0
   local_auth_android: 1.0.48

@@ -6,7 +6,7 @@ sealed class AuthEvent {
 
   const factory AuthEvent.signInWithOAuth() = _SignInWithOAuth;
 
-  const factory AuthEvent.signOut() = _SignOut;
+  const factory AuthEvent.logout() = _LogOut;
 }
 
 final class _SignInWithOAuth extends AuthEvent {
@@ -16,9 +16,9 @@ final class _SignInWithOAuth extends AuthEvent {
   String toString() => "Sign in with OAuth event";
 }
 
-final class _SignOut extends AuthEvent {
-  const _SignOut();
+final class _LogOut extends AuthEvent {
+  const _LogOut();
 
   @override
-  String toString() => "Sign out event";
+  String toString() => "Log out event";
 }

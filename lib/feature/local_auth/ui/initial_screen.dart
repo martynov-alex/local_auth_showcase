@@ -60,7 +60,7 @@ class _LocalAuthInitialMainState extends State<_LocalAuthInitialMain> {
                 LocalAuthSettingsRouteData().go(context);
               },
               onFailure: () {
-                _authBloc.add(const AuthEvent.signOut());
+                _authBloc.add(const AuthEvent.logout());
               },
             ),
           LocalAuthStatusData(isPinCodeSet: false) =>

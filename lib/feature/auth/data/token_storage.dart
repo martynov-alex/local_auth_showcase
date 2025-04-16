@@ -2,15 +2,15 @@ import 'package:local_auth_showcase/core/utils/preferences_dao.dart';
 import 'package:local_auth_showcase/feature/auth/domain/entity/token.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-abstract interface class TokenStorage<T> {
-  Future<T?> load();
+abstract interface class TokenStorage {
+  Future<Token?> load();
 
-  Future<void> save(T tokenPair);
+  Future<void> save(Token tokenPair);
 
   Future<void> clear();
 }
 
-final class TokenStorageImpl implements TokenStorage<Token> {
+final class TokenStorageImpl implements TokenStorage {
   TokenStorageImpl({required SharedPreferences sharedPreferences})
     : _accessToken = TypedEntry(
         sharedPreferences: sharedPreferences,

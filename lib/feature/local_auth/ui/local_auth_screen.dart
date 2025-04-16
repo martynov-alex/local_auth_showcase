@@ -10,7 +10,6 @@ const _dialogId = 'local-auth-dialog';
 
 Future<void> showLocalAuthDialog(
   Dependencies dependencies, {
-  required Color backgroundColor,
   VoidCallback? onSkipped,
   VoidCallback? onSuccess,
   VoidCallback? onFailure,
@@ -27,7 +26,6 @@ Future<void> showLocalAuthDialog(
     id: _dialogId,
     androidWillPop: () => false,
     content: Dialog.fullscreen(
-      backgroundColor: backgroundColor,
       child: LocalAuthScreen(
         isBiometricsEnabled: isBiometricsEnabled,
         onSuccess: () async {

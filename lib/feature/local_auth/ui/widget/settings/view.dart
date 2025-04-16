@@ -13,7 +13,7 @@ import 'package:local_auth_showcase/feature/local_auth/domain/exception/local_au
 import 'package:local_auth_showcase/feature/local_auth/ui/widget/common/modal_dialog.dart';
 import 'package:local_auth_showcase/feature/local_auth/ui/widget/settings/disable_modal.dart';
 
-const _localAuthModalId = 'LocalAuthModal';
+const _modalId = 'local-auth-settings-modal';
 
 class LocalAuthSettingsView extends StatefulWidget {
   const LocalAuthSettingsView({super.key});
@@ -54,9 +54,9 @@ class _LocalAuthSettingsViewState extends State<LocalAuthSettingsView> {
       if (mounted && Theme.of(context).platform == TargetPlatform.iOS) {
         _biometricsAuthBloc.add(
           BiometricsAuthEvent.authRequested(
-            signInTitle: "localAuthConfirmBiometricsTitle",
-            reason: "localAuthConfirmBiometricsReason",
-            cancelButton: "cancel",
+            signInTitle: "Подтвердите биометрию",
+            reason: "чтоб войти в приложение",
+            cancelButton: "Отмена",
           ),
         );
       }
@@ -68,14 +68,14 @@ class _LocalAuthSettingsViewState extends State<LocalAuthSettingsView> {
 
   Future<void> _showDisableModal(VoidCallback onTap) async {
     await showModalDialog(
-      id: _localAuthModalId,
+      id: _modalId,
       content: LocalAuthDisableModal(
         onConfirmTap: () async {
-          await FlutterEasyDialogs.hide(id: _localAuthModalId, instantly: true);
+          await FlutterEasyDialogs.hide(id: _modalId, instantly: true);
           onTap.call();
         },
         onCancelTap: () async {
-          await FlutterEasyDialogs.hide(id: _localAuthModalId);
+          await FlutterEasyDialogs.hide(id: _modalId);
         },
       ),
     );

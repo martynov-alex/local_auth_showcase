@@ -39,6 +39,13 @@ Future<Dependencies> _initDependencies(logging.Logger logger) async {
   final storage = TokenStorageImpl(sharedPreferences: sharedPreferences);
   final token = await storage.load();
 
+  final localAuthLocalStorage = LocalAuthLocalStorageImpl(sharedPreferences);
+
+  final localAuthRepository = LocalAuthRepositoryImpl(
+    settingsStorage: localAuthLocalStorage,
+    backgroundTimeStorage: localAuthLocalStorage,
+  );
+
   final authBloc = AuthBloc(
     AuthState.idle(
       status:
@@ -50,20 +57,14 @@ Future<Dependencies> _initDependencies(logging.Logger logger) async {
       dataSource: FakeAuthDataSource(),
       storage: storage,
     ),
+    localAuthRepository: localAuthRepository,
     errorHandler: errorHandler,
-  );
-
-  final localAuthLocalStorage = LocalAuthLocalStorageImpl(sharedPreferences);
-
-  final localAuthRepository = LocalAuthRepositoryImpl(
-    settingsStorage: localAuthLocalStorage,
-    backgroundTimeStorage: localAuthLocalStorage,
   );
 
   final localAuthStatusBloc = LocalAuthStatusBloc(
     localAuthRepository: localAuthRepository,
     errorHandler: errorHandler,
-  );
+  )..add(LocalAuthStatusEvent.check());
 
   final pinCodeAuthBloc = PinCodeAuthBloc(
     localAuthRepository: localAuthRepository,
@@ -72,6 +73,7 @@ Future<Dependencies> _initDependencies(logging.Logger logger) async {
 
   return Dependencies(
     sharedPreferences: sharedPreferences,
+    logger: logger,
     errorHandler: errorHandler,
     authBloc: authBloc,
     localAuthRepository: localAuthRepository,
@@ -83,6 +85,7 @@ Future<Dependencies> _initDependencies(logging.Logger logger) async {
 base class Dependencies {
   const Dependencies({
     required this.sharedPreferences,
+    required this.logger,
     required this.errorHandler,
     required this.authBloc,
     required this.localAuthRepository,
@@ -91,6 +94,7 @@ base class Dependencies {
   });
 
   final SharedPreferences sharedPreferences;
+  final logging.Logger logger;
   final ErrorHandler errorHandler;
   final AuthBloc authBloc;
   final LocalAuthRepository localAuthRepository;

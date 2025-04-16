@@ -5,9 +5,9 @@ Future<void> showModalDialog({
   required String id,
   required Widget content,
 }) async {
-  final modal = EasyDialog.positioned(
+  final modal = EasyDialog.fullScreen(
     id: id,
-    position: EasyDialogPosition.bottom,
+    androidWillPop: () => false,
     animationConfiguration: const EasyDialogAnimationConfiguration.bounded(
       duration: Duration(milliseconds: 200),
     ),

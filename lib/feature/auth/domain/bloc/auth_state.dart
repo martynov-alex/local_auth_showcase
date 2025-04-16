@@ -12,12 +12,17 @@ sealed class AuthState with EquatableMixin {
   const factory AuthState.processing({required AuthenticationStatus status}) =
       _AuthStateProcessing;
 
+  const factory AuthState.logoutProcessing({
+    required AuthenticationStatus status,
+  }) = _AuthStateLogoutProcessing;
+
   const factory AuthState.error({
     required AuthenticationStatus status,
     required Object error,
   }) = _AuthStateError;
 
   bool get isProcessing => this is _AuthStateProcessing;
+  bool get isLogoutProcessing => this is _AuthStateLogoutProcessing;
   bool get isError => this is _AuthStateError;
   bool get isAuthenticated => status == AuthenticationStatus.authenticated;
   bool get isUnauthenticated => status == AuthenticationStatus.unauthenticated;
@@ -37,6 +42,10 @@ final class _AuthStateIdle extends AuthState {
 
 final class _AuthStateProcessing extends AuthState {
   const _AuthStateProcessing({required super.status});
+}
+
+final class _AuthStateLogoutProcessing extends AuthState {
+  const _AuthStateLogoutProcessing({required super.status});
 }
 
 final class _AuthStateError extends AuthState {

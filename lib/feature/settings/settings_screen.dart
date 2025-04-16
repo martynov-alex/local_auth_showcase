@@ -36,25 +36,15 @@ class _SettingsScreenState extends State<SettingsScreen> {
             },
             trailing: Icon(Icons.security),
           ),
-          BlocBuilder<AuthBloc, AuthState>(
-            builder: (context, state) {
-              return ListTile(
-                title: Text(
-                  "Выйти из аккаунта",
-                  style: context.textTheme.titleLarge,
-                ),
-                onTap: () {
-                  _authBloc.add(const AuthEvent.signOut());
-                },
-                trailing:
-                    state.isProcessing || state.isUnauthenticated
-                        ? CircularProgressIndicator.adaptive(
-                          backgroundColor: context.colorScheme.onPrimary,
-                          constraints: BoxConstraints.tight(Size(20, 20)),
-                        )
-                        : Icon(Icons.logout),
-              );
+          ListTile(
+            title: Text(
+              "Выйти из аккаунта",
+              style: context.textTheme.titleLarge,
+            ),
+            onTap: () {
+              _authBloc.add(const AuthEvent.logout());
             },
+            trailing: Icon(Icons.logout),
           ),
         ],
       ),
