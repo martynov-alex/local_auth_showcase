@@ -301,8 +301,8 @@ class _LocalAuthAuthenticationViewState
       id: _modalId,
       content: ForgotPinCodeModal(
         onConfirmTap: () async {
-          await FlutterEasyDialogs.hide(id: _modalId, instantly: true);
           onTap.call();
+          await FlutterEasyDialogs.hide(id: _modalId, instantly: true);
         },
         onCancelTap: () async {
           await FlutterEasyDialogs.hide(id: _modalId);

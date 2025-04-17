@@ -31,8 +31,8 @@ class _LoginScreenState extends State<LoginScreen> {
               if (state.isProcessing || state.isAuthenticated) {
                 return FilledButton(
                   onPressed: () {},
-                  child: CircularProgressIndicator.adaptive(
-                    backgroundColor: context.colorScheme.onPrimary,
+                  child: CircularProgressIndicator(
+                    color: context.colorScheme.inversePrimary,
                     strokeWidth: 8,
                     constraints: BoxConstraints.tight(Size(40, 40)),
                   ),

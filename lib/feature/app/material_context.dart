@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -37,7 +35,7 @@ class _MaterialContextState extends State<MaterialContext> {
     _showLocalAuthDialog();
   }
 
-  void _showLocalAuthDialog() async {
+  Future<void> _showLocalAuthDialog() async {
     await showLocalAuthDialog(
       _dependencies,
       onFailure: () {
@@ -76,25 +74,17 @@ class _MaterialContextState extends State<MaterialContext> {
                         absorbing: state.isLogoutProcessing,
                         child: child!,
                       ),
-                      if (state.isLogoutProcessing) ...[
-                        ClipRect(
-                          child: BackdropFilter(
-                            filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
-                            child: Container(
-                              color: Colors.transparent,
-                              width: double.infinity,
-                              height: double.infinity,
+                      if (state.isLogoutProcessing)
+                        Container(
+                          color: context.colorScheme.onTertiary,
+                          child: Center(
+                            child: CircularProgressIndicator(
+                              color: context.colorScheme.tertiary,
+                              strokeWidth: 8,
+                              constraints: BoxConstraints.tight(Size(40, 40)),
                             ),
                           ),
                         ),
-                        Center(
-                          child: CircularProgressIndicator.adaptive(
-                            backgroundColor: context.colorScheme.onPrimary,
-                            strokeWidth: 8,
-                            constraints: BoxConstraints.tight(Size(40, 40)),
-                          ),
-                        ),
-                      ],
                     ],
                   );
                 },
@@ -125,12 +115,7 @@ class _MaterialContextState extends State<MaterialContext> {
         final appInBackgroundTime = localAuthRepository.appInBackgroundTime;
 
         if (appInBackgroundTime > blockTime) {
-          showLocalAuthDialog(
-            _dependencies,
-            onFailure: () {
-              context.read<AuthBloc>().add(const AuthEvent.logout());
-            },
-          );
+          _showLocalAuthDialog();
           logger.fine(
             'LocalAuthBackgroundService.AppLifecycleListener.onResume: app blocked at ${DateTime.now()}',
           );
